@@ -1,59 +1,93 @@
-using System;
+﻿using System;
 
-namespace Exercise2_FactoryMethod
+public abstract class Document
 {
-    abstract class Product
+    public abstract void Open();
+    public abstract void Save();
+}
+
+public class PDFDocument : Document
+{
+    public override void Open()
     {
-        public abstract string Operation();
+        Console.WriteLine("Opening PDF Document...");
     }
-
-    class ConcreteProductA : Product
+    
+    public override void Save()
     {
-        public override string Operation() => "Result of ConcreteProductA";
+        Console.WriteLine("Saving as PDF...");
     }
+}
 
-    class ConcreteProductB : Product
+public class WordDocument : Document
+{
+    public override void Open()
     {
-        public override string Operation() => "Result of ConcreteProductB";
+        Console.WriteLine("Opening Word Document...");
     }
-
-    abstract class Creator
+    
+    public override void Save()
     {
-        public abstract Product FactoryMethod();
+        Console.WriteLine("Saving as Word (.docx)...");
+    }
+}
 
-        public string SomeOperation()
+public class ExcelDocument : Document
+{
+    public override void Open()
+    {
+        Console.WriteLine("Opening Excel Document...");
+    }
+    
+    public override void Save()
+    {
+        Console.WriteLine("Saving as Excel (.xlsx)...");
+    }
+}
+
+public class DocumentFactory
+{
+    public static Document CreateDocument(string documentType)
+    {
+        switch (documentType.ToLower())
         {
-            var product = FactoryMethod();
-            return "Creator: The same creator's code has just worked with " + product.Operation();
+            case "pdf":
+                return new PDFDocument();
+            case "word":
+                return new WordDocument();
+            case "excel":
+                return new ExcelDocument();
+            default:
+                throw new ArgumentException("Unknown document type");
         }
     }
+}
 
-    class ConcreteCreatorA : Creator
+class Program
+{
+    static void Main()
     {
-        public override Product FactoryMethod() => new ConcreteProductA();
-    }
-
-    class ConcreteCreatorB : Creator
-    {
-        public override Product FactoryMethod() => new ConcreteProductB();
-    }
-
-    class Program
-    {
-        static void Main()
-        {
-            Console.WriteLine("App: Launched with ConcreteCreatorA.");
-            ClientCode(new ConcreteCreatorA());
-
-            Console.WriteLine();
-            Console.WriteLine("App: Launched with ConcreteCreatorB.");
-            ClientCode(new ConcreteCreatorB());
-        }
-
-        static void ClientCode(Creator creator)
-        {
-            Console.WriteLine("Client: I'm not aware of the creator's class, but it still works.");
-            Console.WriteLine(creator.SomeOperation());
-        }
+        Console.WriteLine("=== Factory Method Pattern Demo ===\n");
+        
+        Console.WriteLine("Creating PDF Document:");
+        Document pdfDoc = DocumentFactory.CreateDocument("pdf");
+        pdfDoc.Open();
+        pdfDoc.Save();
+        
+        Console.WriteLine();
+        
+        Console.WriteLine("Creating Word Document:");
+        Document wordDoc = DocumentFactory.CreateDocument("word");
+        wordDoc.Open();
+        wordDoc.Save();
+        
+        Console.WriteLine();
+        
+        Console.WriteLine("Creating Excel Document:");
+        Document excelDoc = DocumentFactory.CreateDocument("excel");
+        excelDoc.Open();
+        excelDoc.Save();
+        
+        Console.WriteLine("\n✅ All documents created using Factory!");
     }
 }
