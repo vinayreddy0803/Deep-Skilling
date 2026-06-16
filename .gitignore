@@ -35,6 +35,9 @@ bld/
 .idea/
 *.sln.iml
 
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
 # NuGet
 *.nuget.props
 *.nuget.targets
