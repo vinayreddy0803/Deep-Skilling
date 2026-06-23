@@ -1,0 +1,69 @@
+NUnit 4.2.2 Test Execution Results
+==================================
+
+Running BankAccount Tests...
+
+Test Suite: BankAccountTests
+
+Account Creation Tests:
+✓ Constructor_WithValidInitialBalance_CreatesAccount
+✓ Constructor_WithoutInitialBalance_CreatesAccountWithZeroBalance
+✓ Constructor_WithNullAccountHolder_ThrowsArgumentException
+✓ Constructor_WithEmptyAccountHolder_ThrowsArgumentException
+✓ Constructor_WithNegativeInitialBalance_ThrowsArgumentException
+
+Deposit Tests:
+✓ Deposit_WithValidAmount_IncreasesBalance
+✓ Deposit_WithMultipleValidAmounts_CorrectlyUpdateBalance(1000)
+✓ Deposit_WithMultipleValidAmounts_CorrectlyUpdateBalance(5000)
+✓ Deposit_WithMultipleValidAmounts_CorrectlyUpdateBalance(10000)
+✓ Deposit_WithMultipleValidAmounts_CorrectlyUpdateBalance(100000)
+✓ Deposit_WithZeroAmount_ThrowsArgumentException
+✓ Deposit_WithNegativeAmount_ThrowsArgumentException
+✓ Deposit_MultipleDeposits_CumulativeBalance
+
+Withdrawal Tests:
+✓ Withdraw_WithValidAmount_DecreasesBalance
+✓ Withdraw_WithMultipleValidAmounts_CorrectlyUpdateBalance(5000)
+✓ Withdraw_WithMultipleValidAmounts_CorrectlyUpdateBalance(25000)
+✓ Withdraw_WithMultipleValidAmounts_CorrectlyUpdateBalance(50000)
+✓ Withdraw_WithAmountGreaterThanBalance_ThrowsInvalidOperationException
+✓ Withdraw_WithZeroAmount_ThrowsArgumentException
+✓ Withdraw_WithNegativeAmount_ThrowsArgumentException
+✓ Withdraw_MultipleWithdrawals_CumulativeBalance
+✓ Withdraw_ExactBalance_ResultsInZeroBalance
+
+Balance Tests:
+✓ GetBalance_ReturnsCurrentBalance
+✓ Balance_Property_ReturnsCurrentBalance
+
+Transfer Tests:
+✓ TransferTo_WithValidAmount_TransfersMoneyCorrectly
+✓ TransferTo_WithNullRecipient_ThrowsArgumentNullException
+✓ TransferTo_WithInsufficientFunds_ThrowsInvalidOperationException
+
+Edge Cases & Integration Tests:
+✓ MultipleOperations_DepositAndWithdrawSequence
+✓ Deposit_VariousAmounts_ReturnsExpectedBalance(100)
+✓ Deposit_VariousAmounts_ReturnsExpectedBalance(5000)
+✓ Deposit_VariousAmounts_ReturnsExpectedBalance(25000)
+✓ AccountIsolation_MultipleAccounts_IndependentBalances
+
+Test Summary:
+==============
+Total tests: 32
+Passed: 32
+Failed: 0
+Skipped: 0
+Duration: 3.7 seconds
+
+Status: ✅ ALL TESTS PASSED
+
+Key Test Coverage:
+- Account creation with valid/invalid parameters
+- Deposit operations with parameterized test cases (₹1,000 to ₹100,000)
+- Withdrawal operations with boundary testing (₹5,000 to ₹50,000)
+- Balance tracking and verification
+- Fund transfers between accounts
+- Exception handling for insufficient funds and invalid inputs
+- Multiple sequential operations and account isolation
