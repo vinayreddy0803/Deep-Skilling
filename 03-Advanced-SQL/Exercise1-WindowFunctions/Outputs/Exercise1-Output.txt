@@ -1,0 +1,74 @@
+Exercise1-WindowFunctions - Expected outputs
+
+1) ROW_NUMBER() global ranking by Sales (descending):
+RowNum | ProductID | Name                 | Category         | Sales
+------+|-----------|----------------------|------------------|------
+1      | 201       | Men T-Shirt          | Apparel          | 300
+2      | 202       | Jeans                | Apparel          | 220
+3      | 303       | LED Lamp             | Home & Kitchen   | 210
+4      | 103       | Bluetooth Speaker    | Electronics      | 200
+5      | 104       | Smartwatch           | Electronics      | 180
+6      | 1041      | Budget Headphones    | Electronics      | 180
+7      | 101       | Wireless Mouse       | Electronics      | 150
+8      | 102       | Gaming Keyboard      | Electronics      | 120
+9      | 301       | Cookware Set         | Home & Kitchen   | 95
+10     | 203       | Jacket               | Apparel          | 80
+11     | 302       | Vacuum Cleaner       | Home & Kitchen   | 60
+
+2) RANK() vs DENSE_RANK() (global by Sales desc):
+ProductID | Sales | RANK | DENSE_RANK
+101       | 150   | 7    | 6
+102       | 120   | 8    | 7
+103       | 200   | 4    | 4
+104       | 180   | 5    | 5
+1041      | 180   | 5    | 5
+201       | 300   | 1    | 1
+202       | 220   | 2    | 2
+203       | 80    | 10   | 9
+301       | 95    | 9    | 8
+302       | 60    | 11   | 10
+303       | 210   | 3    | 3
+
+3) Partitioned ranking within each Category (RowInCategory, RankInCategory, DenseRankInCategory)
+-- Electronics (ordered by Sales desc)
+ProductID | Sales | RowInCategory | RankInCategory | DenseRankInCategory
+103       | 200   | 1             | 1              | 1
+104       | 180   | 2             | 2              | 2
+1041      | 180   | 3             | 2              | 2
+101       | 150   | 4             | 4              | 3
+102       | 120   | 5             | 5              | 4
+
+-- Apparel
+ProductID | Sales | RowInCategory | RankInCategory | DenseRankInCategory
+201       | 300   | 1             | 1              | 1
+202       | 220   | 2             | 2              | 2
+203       | 80    | 3             | 3              | 3
+
+-- Home & Kitchen
+ProductID | Sales | RowInCategory | RankInCategory | DenseRankInCategory
+303       | 210   | 1             | 1              | 1
+301       | 95    | 2             | 2              | 2
+302       | 60    | 3             | 3              | 3
+
+4) Moving average (last 3 by Sales in each category)
+-- Electronics (MovingAvg_Last3)
+ProductID | Sales | MovingAvg_Last3
+103       | 200   | 200.00
+104       | 180   | 190.00
+1041      | 180   | 186.67
+101       | 150   | 170.00
+102       | 120   | 150.00
+
+-- Apparel
+201       | 300   | 300.00
+202       | 220   | 260.00
+203       | 80    | 200.00
+
+-- Home & Kitchen
+303       | 210   | 210.00
+301       | 95    | 152.50
+302       | 60    | 121.67
+
+Notes:
+- Values are computed from the sample data in `Exercise1-WindowFunctions.sql` (prices in INR).
+- Moving averages rounded to two decimal places.
