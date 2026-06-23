@@ -1,0 +1,19 @@
+=== Exercise7: Financial Forecasting (Recursive Future Value) ===
+
+Present: ₹1,000, Rate: 5%, Years: 5
+  Future Value (Recursive): ₹1,276.28
+  Future Value (Iterative): ₹1,276.28
+  Difference: ₹0.00
+
+Present: ₹5,000, Rate: 7%, Years: 10
+  Future Value (Recursive): ₹9,835.76
+  Future Value (Iterative): ₹9,835.76
+  Difference: ₹0.00
+
+Present: ₹15,000, Rate: 6%, Years: 20
+  Future Value (Recursive): ₹48,107.03
+  Future Value (Iterative): ₹48,107.03
+  Difference: ₹0.00
+
+Interactive mode: enter present value, annual rate (%) and years.
+Present value (e.g. 10000):

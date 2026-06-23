@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 public class RevenuePoint
 {
@@ -102,14 +103,16 @@ class Program
             (present: 15000m, rate: 0.06m, years: 20)
         };
 
+        var india = new CultureInfo("en-IN");
+
         foreach (var s in scenarios)
         {
             decimal fvRec = FutureValueRecursive(s.present, s.rate, s.years);
             decimal fvItr = FutureValueIterative(s.present, s.rate, s.years);
-            Console.WriteLine($"Present: {s.present:C0}, Rate: {s.rate:P0}, Years: {s.years}");
-            Console.WriteLine($"  Future Value (Recursive): {fvRec:C2}");
-            Console.WriteLine($"  Future Value (Iterative): {fvItr:C2}");
-            Console.WriteLine("  Difference: " + (fvRec - fvItr).ToString("C2") + "\n");
+            Console.WriteLine($"Present: {s.present.ToString("C0", india)}, Rate: {s.rate:P0}, Years: {s.years}");
+            Console.WriteLine($"  Future Value (Recursive): {fvRec.ToString("C2", india)}");
+            Console.WriteLine($"  Future Value (Iterative): {fvItr.ToString("C2", india)}");
+            Console.WriteLine("  Difference: " + (fvRec - fvItr).ToString("C2", india) + "\n");
         }
 
         // Interactive example: accept user input and compute
@@ -125,8 +128,30 @@ class Program
         if (!int.TryParse(Console.ReadLine(), out int yrs)) yrs = 10;
 
         decimal forecastRec = FutureValueRecursive(pv, rateDec, yrs);
-        Console.WriteLine($"\nForecast after {yrs} years (recursive): {forecastRec:C2}");
+        Console.WriteLine($"\nForecast after {yrs} years (recursive): {forecastRec.ToString("C2", india)}");
 
         Console.WriteLine("\n✅ Recursive forecasting completed.");
     }
 }
+
+/*
+=== Exercise7: Financial Forecasting (Recursive Future Value) ===
+
+Present: ₹1,000, Rate: 5%, Years: 5
+    Future Value (Recursive): ₹1,276.28
+    Future Value (Iterative): ₹1,276.28
+    Difference: ₹0.00
+
+Present: ₹5,000, Rate: 7%, Years: 10
+    Future Value (Recursive): ₹9,835.76
+    Future Value (Iterative): ₹9,835.76
+    Difference: ₹0.00
+
+Present: ₹15,000, Rate: 6%, Years: 20
+    Future Value (Recursive): ₹48,107.03
+    Future Value (Iterative): ₹48,107.03
+    Difference: ₹0.00
+
+Interactive mode: enter present value, annual rate (%) and years.
+Present value (e.g. 10000):
+*/
