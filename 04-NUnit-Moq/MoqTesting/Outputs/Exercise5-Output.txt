@@ -1,0 +1,91 @@
+Moq 4.20.70 Test Execution Results
+===================================
+
+Running AccountService Tests with Mocked Dependencies...
+
+Test Suite: AccountServiceTests
+
+Constructor Tests:
+✓ Constructor_WithNullRepository_ThrowsArgumentNullException
+✓ Constructor_WithNullEmailService_ThrowsArgumentNullException
+
+Create Account Tests:
+✓ CreateAccount_WithValidData_CreatesAndSendsEmail
+✓ CreateAccount_WithZeroBalance_CreatesSuccessfully
+✓ CreateAccount_WithNullAccountHolder_ThrowsArgumentException
+✓ CreateAccount_WithNegativeBalance_ThrowsArgumentException
+
+Deposit Tests:
+✓ Deposit_WithValidAmount_UpdatesBalanceAndSendsEmail
+✓ Deposit_WithMultipleAmounts_ExecutesCorrectly(5000)
+✓ Deposit_WithMultipleAmounts_ExecutesCorrectly(10000)
+✓ Deposit_WithMultipleAmounts_ExecutesCorrectly(50000)
+✓ Deposit_WithInvalidAccountId_ThrowsInvalidOperationException
+✓ Deposit_WithZeroAmount_ThrowsArgumentException
+✓ Deposit_WithNegativeAmount_ThrowsArgumentException
+
+Withdraw Tests:
+✓ Withdraw_WithValidAmount_UpdatesBalanceAndSendsEmail
+✓ Withdraw_WithInsufficientFunds_ThrowsInvalidOperationException
+✓ Withdraw_WithExactBalance_Succeeds
+
+Transfer Tests:
+✓ Transfer_BetweenValidAccounts_TransfersAndSendsEmails
+✓ Transfer_WithInsufficientFunds_ThrowsInvalidOperationException
+✓ Transfer_WithInvalidSourceAccount_ThrowsInvalidOperationException
+
+Get Account Tests:
+✓ GetAccountDetails_WithValidId_ReturnsAccount
+✓ GetAccountDetails_WithInvalidId_ReturnsNull
+
+Delete Account Tests:
+✓ DeleteAccount_WithValidId_DeletesSuccessfully
+✓ DeleteAccount_WithInvalidId_ReturnsFalse
+
+Mock Verification Tests:
+✓ Deposit_VerifyRepositoryCallOrder
+✓ Deposit_VerifyEmailNotSentOnRepositoryFailure
+✓ Transfer_VerifyBothAccountsUpdatedBeforeSendingEmails
+
+Test Summary:
+==============
+Total tests: 26
+Passed: 26
+Failed: 0
+Skipped: 0
+Total time: 4.8 seconds
+
+Status: ✅ ALL TESTS PASSED
+
+Key Moq Testing Patterns Demonstrated:
+- Mocking IAccountRepository interface for data access layer
+- Mocking IEmailService interface for external notifications
+- Mock<T> setup with Setup() and Returns() methods
+- Verify() for asserting mock method calls
+- It.IsAny<T>() for flexible parameter matching
+- Times.Once(), Times.Exactly(2), Times.Never() for call verification
+- MockSequence for verifying method call order
+- Testing exception scenarios with mocks
+- Testing side effects (emails sent on success, not sent on failure)
+- Parameterized tests with [TestCase] using Moq
+- Dependency injection pattern with constructor arguments
+- Mock isolation - testing business logic without actual database/email
+
+Dependencies Mocked:
+1. IAccountRepository
+   - GetAccountById(int id)
+   - UpdateAccount(Account account)
+   - CreateAccount(string name, decimal balance)
+   - DeleteAccount(int id)
+
+2. IEmailService
+   - SendTransactionEmail(email, subject, message)
+   - SendAccountCreationEmail(email, name)
+
+Business Logic Tested:
+- Account creation with email notification
+- Deposit operations with concurrent repository update + email
+- Withdrawal with balance validation
+- Fund transfers between accounts with dual updates + dual emails
+- Account retrieval and deletion operations
+- All exception scenarios and edge cases
