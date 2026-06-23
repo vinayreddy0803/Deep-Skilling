@@ -67,47 +67,66 @@ public static class Forecasting
 
 class Program
 {
+    // Recursive future value calculation:
+    // FV(present, rate, years) = (1 + rate) * FV(present, rate, years - 1)
+    // Base case: years == 0 => return present
+    static decimal FutureValueRecursive(decimal presentValue, decimal annualRate, int years)
+    {
+        if (years <= 0)
+            return presentValue;
+
+        decimal next = presentValue * (1 + annualRate);
+        return FutureValueRecursive(next, annualRate, years - 1);
+    }
+
+    // Iterative version for verification
+    static decimal FutureValueIterative(decimal presentValue, decimal annualRate, int years)
+    {
+        decimal fv = presentValue;
+        for (int i = 0; i < years; i++)
+        {
+            fv *= (1 + annualRate);
+        }
+        return fv;
+    }
+
     static void Main()
     {
-        var revenueHistory = new List<RevenuePoint>
+        Console.WriteLine("=== Exercise7: Financial Forecasting (Recursive Future Value) ===\n");
+
+        // Sample scenarios to demonstrate recursion
+        var scenarios = new[]
         {
-            new RevenuePoint(1,  12000m),
-            new RevenuePoint(2,  13400m),
-            new RevenuePoint(3,  12800m),
-            new RevenuePoint(4,  14100m),
-            new RevenuePoint(5,  15000m),
-            new RevenuePoint(6,  16000m),
-            new RevenuePoint(7,  17200m),
-            new RevenuePoint(8,  16800m),
-            new RevenuePoint(9,  17900m),
-            new RevenuePoint(10, 19000m)
+            (present: 1000m, rate: 0.05m, years: 5),
+            (present: 5000m, rate: 0.07m, years: 10),
+            (present: 15000m, rate: 0.06m, years: 20)
         };
 
-        Console.WriteLine("=== Financial Forecasting Exercise ===\n");
-
-        Console.WriteLine("Historical revenue data:");
-        foreach (var point in revenueHistory)
+        foreach (var s in scenarios)
         {
-            Console.WriteLine($"Month {point.Month,2}: {point.Revenue:C0}");
+            decimal fvRec = FutureValueRecursive(s.present, s.rate, s.years);
+            decimal fvItr = FutureValueIterative(s.present, s.rate, s.years);
+            Console.WriteLine($"Present: {s.present:C0}, Rate: {s.rate:P0}, Years: {s.years}");
+            Console.WriteLine($"  Future Value (Recursive): {fvRec:C2}");
+            Console.WriteLine($"  Future Value (Iterative): {fvItr:C2}");
+            Console.WriteLine("  Difference: " + (fvRec - fvItr).ToString("C2") + "\n");
         }
 
-        Console.WriteLine();
-        Console.WriteLine("Forecast methods:");
-        Console.WriteLine("1. Simple Moving Average (SMA)");
-        Console.WriteLine("2. Linear Regression\n");
+        // Interactive example: accept user input and compute
+        Console.WriteLine("Interactive mode: enter present value, annual rate (%) and years.");
+        Console.Write("Present value (e.g. 10000): ");
+        if (!decimal.TryParse(Console.ReadLine(), out decimal pv)) pv = 10000m;
 
-        int forecastMonths = 3;
-        int smaWindow = 4;
-        Forecasting.PrintForecastComparison(revenueHistory, forecastMonths, smaWindow);
+        Console.Write("Annual rate percent (e.g. 7 for 7%): ");
+        if (!decimal.TryParse(Console.ReadLine(), out decimal ratePercent)) ratePercent = 7m;
+        decimal rateDec = ratePercent / 100m;
 
-        var regressionModel = Forecasting.LinearRegression(revenueHistory);
-        Console.WriteLine("Regression model:");
-        Console.WriteLine($"  Revenue = {regressionModel.Slope:F2} * month + {regressionModel.Intercept:F2}\n");
+        Console.Write("Years (integer): ");
+        if (!int.TryParse(Console.ReadLine(), out int yrs)) yrs = 10;
 
-        Console.WriteLine("Why this exercise matters:");
-        Console.WriteLine("- SMA smooths short-term variation and is useful for baseline planning.");
-        Console.WriteLine("- Regression captures the long-term trend so forecasts adapt to growth.");
-        Console.WriteLine("- Real-world forecasting compares multiple methods before choosing a strategy.");
-        Console.WriteLine("- This demo teaches how data-driven financial projections are built.");
+        decimal forecastRec = FutureValueRecursive(pv, rateDec, yrs);
+        Console.WriteLine($"\nForecast after {yrs} years (recursive): {forecastRec:C2}");
+
+        Console.WriteLine("\n✅ Recursive forecasting completed.");
     }
 }
