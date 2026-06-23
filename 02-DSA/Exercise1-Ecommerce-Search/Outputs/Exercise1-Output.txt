@@ -1,0 +1,53 @@
+=== DSA Exercise 2: E-commerce Search Demo ===
+
+Product catalog:
+  101 - Wireless Mouse
+  122 - Gaming Keyboard
+  134 - Noise-Cancelling Headphones
+  145 - Bluetooth Speaker
+  157 - Smartwatch
+  169 - Laptop Stand
+  180 - Portable Charger
+  192 - Webcam
+  205 - USB-C Hub
+  217 - External SSD
+
+--- Existing products tests ---
+
+Searching for ID 157...
+Linear Search for 157: found Smartwatch at index 4 | comparisons = 5
+Binary Search for 157: found Smartwatch at index 4 | comparisons = 1
+
+Searching for ID 101...
+Linear Search for 101: found Wireless Mouse at index 0 | comparisons = 1
+Binary Search for 101: found Wireless Mouse at index 0 | comparisons = 3
+
+Searching for ID 217...
+Linear Search for 217: found External SSD at index 9 | comparisons = 10
+Binary Search for 217: found External SSD at index 9 | comparisons = 4
+
+--- Missing product test ---
+
+Linear Search for 999: not found | comparisons = 10
+Binary Search for 999: not found | comparisons = 4
+
+=== Algorithm Comparison ===
+ID      | Linear Comparisons | Binary Comparisons
+--------+--------------------+--------------------
+157     | 5                  | 1                 
+101     | 1                  | 3                 
+217     | 10                 | 4                 
+999     | 10                 | 4                 
+
+Why Binary Search is usually better for sorted data:
+- Linear Search checks each item one by one (O(n)).
+- Binary Search halves the search range each time (O(log n)).
+- For this 10-item catalog, linear search may take up to 10 comparisons.
+- Binary search takes only 4 comparisons or fewer for the same catalog.
+- As the catalog grows, Binary Search becomes much faster than Linear Search.
+
+✅ Summary:
+  - Linear Search: O(n)
+  - Binary Search: O(log n)
+  - Use Binary Search when data is sorted and random-access is available.
+  - Use Linear Search when the data is small, unsorted, or when items are added frequently.

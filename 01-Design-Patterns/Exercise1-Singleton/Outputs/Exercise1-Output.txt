@@ -1,0 +1,8 @@
+=== Singleton Pattern Demo ===
+
+Database Connection Created!
+Connected to Database!
+Connected to Database!
+
+Are db1 and db2 the same object?
+True
