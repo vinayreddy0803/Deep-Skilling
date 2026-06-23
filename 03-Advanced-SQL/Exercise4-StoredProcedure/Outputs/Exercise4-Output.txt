@@ -1,0 +1,16 @@
+Expected outputs when running the example EXEC statements in Exercise4-StoredProcedure.sql
+
+1) GetProductSales for ProductID=101
+Sales
+-----
+150
+
+2) UpdateProductPrice for ProductID=102 to 2599.00
+RowsAffected
+------------
+1
+
+3) GetCategorySales for Category='Electronics'
+ElectronicsTotalSales
+---------------------
+650
